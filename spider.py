@@ -1,5 +1,7 @@
-import scrapy
 import os 
+
+import scrapy
+from mastodon import Mastodon 
 
 
 class VacinatedSpider(scrapy.Spider):
@@ -25,3 +27,9 @@ class VacinatedSpider(scrapy.Spider):
             bar = "{} {} %".format(bar, percentage)
 
             file.write(bar)
+
+            mastodon = Mastodon(
+                access_token = os.getenv("MASTODON_ACCESS_TOKEN"),
+                api_base_url = 'https://mastodon.online'
+            )
+            mastodon.toot(bar)

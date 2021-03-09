@@ -10,15 +10,11 @@ jobs:
       - uses: actions/setup-python@v1
         with:
           python-version: "3.8"
-      - name: Install Scrapy
+      - name: Install Scrapy + Mastodon.py
         run: |
-          pip install scrapy
-      - name: Generate Tweet
+          pip install scrapy Mastodon.py
+      - name: Generate Toot
         run: |
           scrapy runspider spider.py
-          echo "TWEET=`cat progress.txt`" >> $GITHUB_ENV
-      - uses: rzr/fediverse-action@master
-        with:
-          access-token: ${{ secrets.MASTODON_ACCESS_TOKEN }}
-          host: mastodon.online
-          message: ${{ env.TWEET }}
+        env: 
+          MASTODON_ACCESS_TOKEN: ${{ secrets.MASTODON_ACCESS_TOKEN }}
