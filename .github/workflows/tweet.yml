@@ -1,9 +1,9 @@
 on: [push]
 
-name: Push Tweet With Progress
+name: Push Tweet / Toot With Progress
 
 jobs:
-  tweet:
+  tweetntoot:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
@@ -20,4 +20,5 @@ jobs:
       - uses: rzr/fediverse-action@master
         with:
           access-token: ${{ secrets.MASTODON_ACCESS_TOKEN }}
+          host: mastodon.online
           message: ${{ env.TWEET }}
