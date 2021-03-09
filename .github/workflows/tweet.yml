@@ -1,0 +1,23 @@
+on: [push]
+
+name: Push Tweet With Progress
+
+jobs:
+  tweet:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v1
+        with:
+          python-version: "3.8"
+      - name: Install Scrapy
+        run: |
+          pip install scrapy
+      - name: Generate Tweet
+        run: |
+          scrapy runspider spider.py
+          echo "TWEET=`cat progress.txt`" >> $GITHUB_ENV
+      - uses: rzr/fediverse-action@master
+        with:
+          access-token: ${{ secrets.MASTODON_ACCESS_TOKEN }}
+          message: ${{ env.TWEET }}
