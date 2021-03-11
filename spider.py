@@ -1,4 +1,5 @@
 import os 
+import math 
 
 import scrapy
 from mastodon import Mastodon 
@@ -12,10 +13,14 @@ class VacinatedSpider(scrapy.Spider):
         with open("progress.txt", "w", encoding="utf-8") as file:
             text = response.xpath("/html/body/main/section[1]/div/div/div/div/div/div/div[2]/p/span[4]/text()").get()
             percentage = text.split()[0]
-            percentagerounded = text.split(",")[0]
+            floatpercentage = float(percentage.replace(",", "."))
+            percentagerounded = int(math.ceil(floatpercentage))
 
-            fullchars = int(int(percentagerounded)/4)
-            emptychars = 25 - fullchars
+            divider = 5 
+            maxchars = int(100 / divider)
+
+            fullchars = math.ceil(percentagerounded/divider)
+            emptychars = maxchars - fullchars
             
             bar = ""
             for _ in range(fullchars):
