@@ -11,7 +11,7 @@ class VacinatedSpider(scrapy.Spider):
 
     def parse(self, response):
         with open("progress.txt", "w", encoding="utf-8") as file:
-            text = response.xpath("/html/body/main/section[1]/div/div/div/div/div/div/div[2]/p/span[4]/text()").get()
+            text = response.xpath("/html/body/main/section/div[2]/div/div/div/div/div/div[2]/p/span[4]/span/text()").get()
             percentage = text.split()[0]
             floatpercentage = float(percentage.replace(",", "."))
             percentagerounded = int(math.ceil(floatpercentage))
