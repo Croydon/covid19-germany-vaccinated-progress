@@ -8,6 +8,9 @@ from mastodon import Mastodon
 class VacinatedSpider(scrapy.Spider):
     name = 'vacinatedspider'
     start_urls = ['https://impfdashboard.de']
+    settings = {
+        "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:93.0) Gecko/20100101 Firefox/93.0",
+    }
 
     def parse(self, response):
         with open("progress.txt", "w", encoding="utf-8") as file:
