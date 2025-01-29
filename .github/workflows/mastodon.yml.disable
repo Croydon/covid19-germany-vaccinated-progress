@@ -2,7 +2,7 @@ on:
   schedule:
     - cron: "0 */12 * * *"
 
-name: Push Tweet / Toot With Progress
+name: Push Toot With Progress
 
 jobs:
   tweetntoot:
